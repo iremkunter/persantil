@@ -1,4 +1,4 @@
-var C="tt-persantil-v3";
+var C="tt-persantil-v4";
 var F=["./","./index.html","./who.js","./neyzi.js","./manifest.webmanifest",
        "./icon-192.png","./icon-512.png","./icon-180.png"];
 self.addEventListener("install",function(e){

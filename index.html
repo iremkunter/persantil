@@ -326,7 +326,9 @@ function yasBilgisi(olcumTarihi){
   var gy=gebelikGun(), duz=null;
   if(gy!==null){
     var d=Math.max(0, g-(280-gy));
-    var sinir=(gy<28*7)?1095:730;
+    // 32 haftadan kucuk dogan tum pretermlerde 36. duzeltilmis aya kadar duzelt
+    // (Journal of Perinatology 2024 derlemesi); 32-36 hafta arasi 24 ay.
+    var sinir=(gy<32*7)?1095:730;
     if(d<sinir) duz=d;
   }
   return {takvimGun:g, duzGun:duz, gy:gy, kullanilanGun:(duz!==null?duz:g)};
