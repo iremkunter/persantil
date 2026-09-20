@@ -5,13 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#F7F1E8">
 <title>Persantil — TinyTalks</title>
-<meta name="description" content="Bebek ve çocuklar için persantil ve z-skor hesaplayıcı. Prematüre doğanlarda düzeltilmiş yaşı otomatik hesaplar.">
+<meta name="description" content="Türk çocukları için Neyzi referansına göre persantil, z-skor, büyüme takibi ve hedef boy. Prematürelerde düzeltilmiş yaşı otomatik hesaplar.">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" href="icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Persantil">
 <style>
 :root{
@@ -27,35 +26,37 @@
 }}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;background:var(--krem);color:var(--murekkep)}
-body{
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   line-height:1.5;padding:env(safe-area-inset-top) 16px calc(40px + env(safe-area-inset-bottom));
-  -webkit-font-smoothing:antialiased;
-}
+  -webkit-font-smoothing:antialiased;}
 .wrap{max-width:560px;margin:0 auto}
-header{text-align:center;padding:26px 0 4px}
+header{text-align:center;padding:24px 0 4px}
 .marka{font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin:0}
 h1{font-size:31px;margin:8px 0 3px;letter-spacing:-.025em;font-weight:800}
 .alt{margin:0;color:var(--soft);font-size:14px}
+
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:20px 0 4px}
+.tabs button{font:inherit;font-weight:700;font-size:15px;padding:13px 6px;border-radius:13px;
+  border:1.5px solid var(--cizgi);background:transparent;color:var(--murekkep);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--teal);border-color:var(--teal);color:#fff}
 
 .kart{background:var(--kart);border:1px solid var(--cizgi);border-radius:18px;
   box-shadow:var(--golge);padding:18px;margin:16px 0}
 label{display:block;font-size:12px;font-weight:800;letter-spacing:.09em;
   text-transform:uppercase;color:var(--soft);margin:0 0 7px}
-.seg{display:grid;gap:8px}
-.seg.i2{grid-template-columns:1fr 1fr}
+label em{text-transform:none;letter-spacing:0;font-weight:600;font-style:normal}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .seg button{font:inherit;font-weight:700;font-size:16px;padding:14px 8px;border-radius:13px;
   border:1.5px solid var(--cizgi);background:transparent;color:var(--murekkep);cursor:pointer;transition:.12s}
 .seg button[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:#fff}
-.seg button:disabled{opacity:.45;cursor:not-allowed}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .alan{margin-top:15px}
 input[type=date],input[type=number],input[type=text]{
   width:100%;font:inherit;font-size:17px;padding:13px 14px;border-radius:13px;
-  border:1.5px solid var(--cizgi);background:transparent;color:var(--murekkep);
-}
+  border:1.5px solid var(--cizgi);background:transparent;color:var(--murekkep);}
 input:focus{outline:2px solid var(--mercan);outline-offset:1px;border-color:var(--mercan)}
 .ipucu{margin-top:8px;font-size:13px;color:var(--soft)}
+.ipucu b{color:var(--murekkep)}
 .yas{margin-top:10px;font-size:14.5px;font-weight:700;color:var(--teal);min-height:21px}
 .duz{display:block;font-size:13.5px;font-weight:700;color:var(--mor);margin-top:3px}
 .btn{width:100%;font:inherit;font-weight:800;font-size:17px;padding:16px;border:none;
@@ -87,13 +88,35 @@ input:focus{outline:2px solid var(--mercan);outline-offset:1px;border-color:var(
   padding:4px 9px;border-radius:7px;border:1.5px solid currentColor}
 
 .bilgi{background:var(--kart);border:1px solid var(--cizgi);border-radius:16px;
-  padding:16px 18px;margin-top:18px;font-size:13.5px;color:var(--soft);line-height:1.65}
+  padding:16px 18px;margin-top:16px;font-size:13.5px;color:var(--soft);line-height:1.65}
 .bilgi b{color:var(--murekkep)}
 .bilgi h3{margin:0 0 8px;font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--teal)}
-.bilgi+.bilgi{margin-top:12px}
 .hata{color:var(--uyari);font-size:14px;font-weight:700;margin-top:12px}
 footer{text-align:center;color:var(--soft);font-size:12.5px;margin-top:24px;line-height:1.75}
 footer b{color:var(--murekkep)}
+
+/* --- takip --- */
+.kayitlar{list-style:none;margin:14px 0 0;padding:0}
+.kayitlar li{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--cizgi)}
+.kayitlar li:first-child{border-top:none}
+.kt{flex:1;font-size:14.5px}
+.kt b{display:block;font-size:15px}
+.kt span{color:var(--soft);font-size:13px}
+.kp{font-weight:800;font-size:17px;font-variant-numeric:tabular-nums;text-align:right;min-width:56px}
+.kp small{display:block;font-size:10.5px;font-weight:700;color:var(--soft)}
+.sil{background:none;border:none;color:var(--soft);font-size:20px;cursor:pointer;padding:4px 6px;line-height:1}
+.grafik{width:100%;height:190px;margin-top:6px;display:block}
+.bos{color:var(--soft);font-size:14.5px;margin:14px 0 0}
+.sapma{border-left:4px solid var(--uyari);background:var(--kart);border-radius:0 14px 14px 0;
+  padding:14px 16px;margin-top:14px;font-size:14px}
+.sapma b{color:var(--uyari)}
+.sapma.iyi{border-left-color:var(--teal)}
+.sapma.iyi b{color:var(--teal)}
+
+/* --- hedef boy --- */
+.hedef{text-align:center;padding:10px 0 4px}
+.hedef .buyuk{font-size:42px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+.hedef .aralik{font-size:15px;color:var(--soft);margin-top:6px;font-weight:600}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -102,16 +125,23 @@ footer b{color:var(--murekkep)}
   <header>
     <p class="marka">TinyTalks · Dr. İrem</p>
     <h1>Persantil</h1>
-    <p class="alt">Prematüre doğanlarda düzeltilmiş yaşı kendisi hesaplar.</p>
+    <p class="alt">Türk çocukları için Neyzi referansı · prematürede düzeltilmiş yaş</p>
   </header>
 
+  <div class="tabs" role="tablist">
+    <button id="tb1" role="tab" aria-selected="true">Hesapla</button>
+    <button id="tb2" role="tab" aria-selected="false">Takip &amp; hedef boy</button>
+  </div>
+
+  <!-- ==================== HESAPLA ==================== -->
+  <section id="s1">
   <div class="kart">
-    <label for="ad">Çocuğun adı <em style="text-transform:none;letter-spacing:0;font-weight:600">(isteğe bağlı)</em></label>
+    <label for="ad">Çocuğun adı <em>(isteğe bağlı)</em></label>
     <input id="ad" type="text" placeholder="örn. Deniz" autocomplete="off">
 
     <div class="alan">
       <label>Cinsiyet</label>
-      <div class="seg i2">
+      <div class="seg">
         <button id="sxb" type="button" aria-pressed="true">Erkek</button>
         <button id="sxg" type="button" aria-pressed="false">Kız</button>
       </div>
@@ -130,42 +160,39 @@ footer b{color:var(--murekkep)}
 
     <div id="prealan" hidden>
       <div class="alan grid2">
-        <div>
-          <label for="gh">Gebelik haftası</label>
-          <input id="gh" type="number" inputmode="numeric" step="1" min="22" max="36" placeholder="32">
-        </div>
-        <div>
-          <label for="gg">Gün</label>
-          <input id="gg" type="number" inputmode="numeric" step="1" min="0" max="6" placeholder="4">
-        </div>
+        <div><label for="gh">Gebelik haftası</label>
+          <input id="gh" type="number" inputmode="numeric" step="1" min="22" max="36" placeholder="32"></div>
+        <div><label for="gg">Gün</label>
+          <input id="gg" type="number" inputmode="numeric" step="1" min="0" max="6" placeholder="4"></div>
       </div>
-      <p class="ipucu">Doğduğu andaki gebelik yaşı. Örn. 32 hafta 4 gün ise 32 ve 4 yaz.
-      Düzeltilmiş yaşı ben hesaplarım — ayrıca bir doğum günü uydurmana gerek yok.</p>
-    </div>
-
-    <div class="alan grid2">
-      <div>
-        <label for="kg">Kilo (kg)</label>
-        <input id="kg" type="number" inputmode="decimal" step="0.01" min="0.3" max="120" placeholder="7,4">
-      </div>
-      <div>
-        <label for="boy">Boy (cm)</label>
-        <input id="boy" type="number" inputmode="decimal" step="0.1" min="25" max="200" placeholder="68,5">
-      </div>
+      <p class="ipucu">Doğduğu andaki gebelik yaşı. Düzeltilmiş yaşı ben hesaplarım —
+      ayrıca bir doğum günü uydurmana gerek yok.</p>
     </div>
 
     <div class="alan">
-      <label for="bas">Baş çevresi (cm) <em style="text-transform:none;letter-spacing:0;font-weight:600">(isteğe bağlı)</em></label>
+      <label for="olcumT">Ölçüm tarihi <em>(boş bırakırsan bugün)</em></label>
+      <input id="olcumT" type="date">
+    </div>
+
+    <div class="alan grid2">
+      <div><label for="kg">Kilo (kg)</label>
+        <input id="kg" type="number" inputmode="decimal" step="0.01" min="0.3" max="150" placeholder="7,4"></div>
+      <div><label for="boy">Boy (cm)</label>
+        <input id="boy" type="number" inputmode="decimal" step="0.1" min="25" max="210" placeholder="68,5"></div>
+    </div>
+
+    <div class="alan">
+      <label for="bas">Baş çevresi (cm) <em>(0–3 yaş, isteğe bağlı)</em></label>
       <input id="bas" type="number" inputmode="decimal" step="0.1" min="20" max="65" placeholder="43,2">
     </div>
 
     <p class="ipucu" style="margin-top:16px">
-      <b style="color:var(--murekkep)">Referans:</b> 0–5 yaş için WHO büyüme standartları,
-      6–18 yaş için Neyzi ve ark. Türk çocukları referansı otomatik seçilir.
+      <b>Referans:</b> Neyzi ve ark., Türk çocukları. Baş çevresi 0–3 yaş,
+      vücut kitle indeksi 2 yaştan itibaren. 2 yaş altında boya göre kilo gösterilir (WHO).
     </p>
 
     <button class="btn" id="hesapla" type="button">Hesapla</button>
-    <button class="btn ikincil" id="temizle" type="button">Ölçümleri temizle</button>
+    <button class="btn ikincil" id="kaydet" type="button">Hesapla ve takibe kaydet</button>
     <div class="hata" id="hata"></div>
   </div>
 
@@ -175,20 +202,59 @@ footer b{color:var(--murekkep)}
     <h3>Persantil ne demek?</h3>
     50. persantil ortalamadır: aynı yaş ve cinsiyetteki 100 çocuktan 50'si bu değerin altındadır.
     <b>15. persantil de 90. persantil de sağlıklı olabilir.</b> Asıl önemli olan tek bir ölçüm değil,
-    çocuğun zaman içinde kendi eğrisini takip etmesidir. Persantil bandında ani ve belirgin bir
-    kayma varsa hekimine danış.
+    çocuğun zaman içinde kendi eğrisini takip etmesidir.
   </div>
 
   <div class="bilgi" id="b2" hidden>
     <h3>Düzeltilmiş yaş neden kullanılır?</h3>
-    Prematüre doğan bir bebeğin büyümesi, doğduğu güne göre değil <b>beklenen doğum tarihine</b>
-    göre değerlendirilir. 32 haftada doğan bir bebek 6 aylıkken aslında 4 aylık gibi büyür;
-    takvim yaşıyla bakılırsa gereksiz yere "geride" görünür.
-    Düzeltme genellikle <b>2 yaşına kadar</b>, çok erken doğanlarda <b>3 yaşına kadar</b> uygulanır.
-    Bu uygulama düzeltilmiş yaşı senin için hesaplar; ikisini de yan yana gösterir.
+    Prematüre doğan bebeğin büyümesi doğduğu güne göre değil <b>beklenen doğum tarihine</b> göre
+    değerlendirilir. 32 haftada doğan bebek 6 aylıkken aslında 4 aylık gibi büyür; takvim yaşıyla
+    bakılırsa gereksiz yere geride görünür. Düzeltme <b>2 yaşına kadar</b>, çok erken doğanlarda
+    <b>3 yaşına kadar</b> uygulanır.
+  </div>
+  </section>
+
+  <!-- ==================== TAKİP ==================== -->
+  <section id="s2" hidden>
+  <div class="kart">
+    <label>Büyüme takibi</label>
+    <p class="ipucu" style="margin-top:0">
+      Kayıtlar yalnızca bu telefonda saklanır, hiçbir yere gönderilmez.
+    </p>
+    <svg class="grafik" id="grafik" viewBox="0 0 560 190" preserveAspectRatio="none" aria-label="Persantil eğrisi"></svg>
+    <div id="sapmaKutu"></div>
+    <ul class="kayitlar" id="kayitlar"></ul>
+    <p class="bos" id="bosMesaj">Henüz kayıt yok. "Hesapla" sekmesinde ölçümü girip
+      <b>takibe kaydet</b> dediğinde burada birikir.</p>
+    <button class="btn ikincil" id="temizleKayit" type="button">Tüm kayıtları sil</button>
   </div>
 
-  <div class="bilgi" id="b3" hidden>
+  <div class="kart">
+    <label>Hedef boy <em>(anne–baba boyuna göre)</em></label>
+    <div class="alan grid2">
+      <div><label for="annB">Anne boyu (cm)</label>
+        <input id="annB" type="number" inputmode="decimal" step="0.1" min="120" max="210" placeholder="162"></div>
+      <div><label for="babB">Baba boyu (cm)</label>
+        <input id="babB" type="number" inputmode="decimal" step="0.1" min="120" max="220" placeholder="176"></div>
+    </div>
+    <button class="btn" id="hedefBtn" type="button">Hedef boyu hesapla</button>
+    <div id="hedefSonuc"></div>
+  </div>
+
+  <div class="bilgi">
+    <h3>Hedef boy nedir?</h3>
+    Çocuğun anne ve babasından aldığı <b>genetik boy potansiyeli</b>. Hesaplama şöyle:
+    erkek çocukta anne ile baba boyunun ortalamasına <b>6,5 cm eklenir</b>, kız çocukta
+    <b>6,5 cm çıkarılır</b>. Çıkan sayı bir söz değil, bir <b>beklenti aralığının merkezidir</b>
+    — bu yüzden altında ve üstünde 8,5 cm'lik bir bant verilir.<br><br>
+    Asıl kullanımı şu: çocuğun kendi boy persantili ile hedef boy persantili birbirine
+    yakın olmalı. Arada büyük fark varsa — örneğin anne baba uzunken çocuk 3. persantilde
+    seyrediyorsa — bu <b>tek başına kısa boy olmasından daha anlamlı bir bulgudur</b> ve
+    hekim değerlendirmesi gerektirir.
+  </div>
+  </section>
+
+  <div class="bilgi" id="b3">
     <h3>Telefonuna uygulama olarak ekle</h3>
     <b>iPhone:</b> Safari'de paylaş simgesine dokun → "Ana Ekrana Ekle".<br>
     <b>Android:</b> Chrome'da sağ üstteki menü → "Uygulamayı yükle".<br>
@@ -198,67 +264,53 @@ footer b{color:var(--murekkep)}
   <footer>
     <b>@tinytalksbydrirem</b><br>
     Bilgilendirme amaçlıdır; muayene ve tıbbi değerlendirme yerine geçmez.<br>
-Kaynak: 0–5 yaş WHO Child Growth Standards (2006);<br>6–18 yaş Neyzi ve ark. Türk çocukları referansı.
+    Kaynak: Neyzi ve ark., Türk çocukları referans değerleri.<br>
+    2 yaş altı boya göre kilo: WHO Child Growth Standards (2006).
   </footer>
 </div>
 
 <script src="who.js"></script>
 <script src="neyzi.js"></script>
 <script>
-var sx="b", ref="who";
-
+var sx="b";
 function ap(id,v){document.getElementById(id).setAttribute("aria-pressed",v?"true":"false");}
-function sec(s){sx=s; ap("sxb",s==="b"); ap("sxg",s==="g"); kaydet();}
+function sec(s){sx=s; ap("sxb",s==="b"); ap("sxg",s==="g"); kaydetAyar();}
 document.getElementById("sxb").onclick=function(){sec("b")};
 document.getElementById("sxg").onclick=function(){sec("g")};
 
-function ayGrid(g,ay){
-  if(ay<=g[0]) return 0;
-  if(ay>=g[g.length-1]) return g.length-1;
-  for(var i=0;i<g.length-1;i++) if(ay>=g[i]&&ay<=g[i+1]) return i+(ay-g[i])/(g[i+1]-g[i]);
-  return g.length-1;
+/* ------- sekmeler ------- */
+function sekme(n){
+  document.getElementById("tb1").setAttribute("aria-selected", n===1);
+  document.getElementById("tb2").setAttribute("aria-selected", n===2);
+  document.getElementById("s1").hidden = n!==1;
+  document.getElementById("s2").hidden = n!==2;
+  if(n===2) cizTakip();
 }
-function lmsGrid(tab,g,ay){
-  var f=ayGrid(g,ay), i=Math.floor(f), t=f-i;
-  if(i>=tab.length-1) return tab[tab.length-1];
-  var a=tab[i],b=tab[i+1];
-  return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];
-}
-// ölçüme ve yaşa göre doğru referansı seçer
-function ref_lms(olcum, sx, ay){
-  var N=(typeof NEYZI_618!=="undefined")?NEYZI_618:null;
-  var neyziVar = N && N[olcum] && N[olcum][sx];
-  if(ay<=60 || !neyziVar) return {p:lms(WHO[olcum][sx],ay), ad:"WHO"};
-  if(ay>=72) return {p:lmsGrid(N[olcum][sx], N[olcum+"_ay"], ay), ad:"Neyzi"};
-  // 60–72 ay köprüsü
-  var a=lms(WHO[olcum][sx],60), b=lmsGrid(N[olcum][sx],N[olcum+"_ay"],72), t=(ay-60)/12;
-  return {p:[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t], ad:"WHO→Neyzi"};
-}
-function maxAy(){ return (typeof NEYZI_618!=="undefined" && NEYZI_618) ? 216 : 60; }
+document.getElementById("tb1").onclick=function(){sekme(1)};
+document.getElementById("tb2").onclick=function(){sekme(2)};
 
 document.getElementById("pre").onchange=function(){
-  document.getElementById("prealan").hidden=!this.checked;
-  yenileYas(); kaydet();
+  document.getElementById("prealan").hidden=!this.checked; yenileYas(); kaydetAyar();
 };
 
-function gunFarki(d){
-  var b=new Date(d+"T00:00:00"), t=new Date();
-  t=new Date(t.getFullYear(),t.getMonth(),t.getDate());
-  if(isNaN(b)||b>t) return null;
-  return Math.round((t-b)/86400000);
+/* ------- yaş ------- */
+function bugun(){var t=new Date();return new Date(t.getFullYear(),t.getMonth(),t.getDate());}
+function gunFarki(dogum, olcum){
+  var b=new Date(dogum+"T00:00:00");
+  var o=olcum?new Date(olcum+"T00:00:00"):bugun();
+  if(isNaN(b)||isNaN(o)||b>o) return null;
+  return Math.round((o-b)/86400000);
 }
 function yasMetni(g){
   if(g<0) return "—";
   var y=Math.floor(g/365.25), k=g-Math.floor(y*365.25);
   var a=Math.floor(k/30.4375), gn=Math.round(k-a*30.4375);
   if(gn>=30){a++;gn=0;}
-  var p=[];
-  if(y) p.push(y+" yaş");
-  if(a) p.push(a+" ay");
-  if(gn||!p.length) p.push(gn+" gün");
+  var p=[]; if(y)p.push(y+" yaş"); if(a)p.push(a+" ay");
+  if(gn||!p.length)p.push(gn+" gün");
   return p.join(" ");
 }
-function prematureHaftasi(){
+function gebelikGun(){
   if(!document.getElementById("pre").checked) return null;
   var h=parseInt(document.getElementById("gh").value,10);
   var g=parseInt(document.getElementById("gg").value,10)||0;
@@ -266,47 +318,45 @@ function prematureHaftasi(){
   if(!(g>=0&&g<=6)) g=0;
   return h*7+g;
 }
-function yasBilgisi(){
+function yasBilgisi(olcumTarihi){
   var dt=document.getElementById("dt").value;
-  var g=dt?gunFarki(dt):null;
+  if(!dt) return null;
+  var g=gunFarki(dt, olcumTarihi);
   if(g===null) return null;
-  var gy=prematureHaftasi();
-  var duz=null, uygulandi=false;
+  var gy=gebelikGun(), duz=null;
   if(gy!==null){
-    var eksik=280-gy;                 // beklenen doğuma kalan gün
-    duz=Math.max(0,g-eksik);
-    // 2 yaşına kadar (çok erken doğanlarda 3) düzeltme uygulanır
-    var sinirGun=(gy<28*7)?1095:730;
-    uygulandi = duz < sinirGun;
-    if(!uygulandi) duz=null;
+    var d=Math.max(0, g-(280-gy));
+    var sinir=(gy<28*7)?1095:730;
+    if(d<sinir) duz=d;
   }
-  return {takvimGun:g, duzGun:duz, uygulandi:uygulandi, gy:gy,
-          kullanilanGun:(duz!==null?duz:g)};
+  return {takvimGun:g, duzGun:duz, gy:gy, kullanilanGun:(duz!==null?duz:g)};
 }
 function yenileYas(){
-  var y=yasBilgisi(), el=document.getElementById("yas");
+  var y=yasBilgisi(document.getElementById("olcumT").value), el=document.getElementById("yas");
   if(!y){el.innerHTML=""; return;}
   var s="Takvim yaşı: "+yasMetni(y.takvimGun);
-  if(y.duzGun!==null){
-    s+='<span class="duz">Düzeltilmiş yaş: '+yasMetni(y.duzGun)+
-       ' &nbsp;·&nbsp; hesaplama buna göre yapılır</span>';
-  } else if(y.gy!==null){
-    s+='<span class="duz">Düzeltme yaşı geçti — takvim yaşı kullanılır</span>';
-  }
+  if(y.duzGun!==null) s+='<span class="duz">Düzeltilmiş yaş: '+yasMetni(y.duzGun)+' · hesaplama buna göre</span>';
+  else if(y.gy!==null) s+='<span class="duz">Düzeltme yaşı geçti — takvim yaşı kullanılır</span>';
   el.innerHTML=s;
 }
-["dt","gh","gg"].forEach(function(i){
-  document.getElementById(i).addEventListener("input",function(){yenileYas();kaydet();});
+["dt","gh","gg","olcumT"].forEach(function(i){
+  document.getElementById(i).addEventListener("input",function(){yenileYas();kaydetAyar();});
 });
 
-function lms(tab,ay){
-  var n=tab.length-1;
-  if(ay<=0) return tab[0];
-  if(ay>=n) return tab[n];
-  var i=Math.floor(ay), f=ay-i, a=tab[i], b=tab[i+1];
-  return [a[0]+(b[0]-a[0])*f, a[1]+(b[1]-a[1])*f, a[2]+(b[2]-a[2])*f];
+/* ------- LMS ------- */
+function gridIndex(g,ay){
+  if(ay<=g[0]) return 0;
+  if(ay>=g[g.length-1]) return g.length-1;
+  for(var i=0;i<g.length-1;i++) if(ay>=g[i]&&ay<=g[i+1]) return i+(ay-g[i])/(g[i+1]-g[i]);
+  return g.length-1;
 }
-function lmsBoy(tab,boy){
+function lmsGrid(tab,g,ay){
+  var f=gridIndex(g,ay), i=Math.floor(f), t=f-i;
+  if(i>=tab.length-1) return tab[tab.length-1];
+  var a=tab[i],b=tab[i+1];
+  return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t];
+}
+function lmsBoyGrid(tab,boy){
   if(boy<=tab[0][0]) return tab[0].slice(1);
   var son=tab[tab.length-1];
   if(boy>=son[0]) return son.slice(1);
@@ -321,8 +371,8 @@ function lmsBoy(tab,boy){
   return son.slice(1);
 }
 function zSkor(x,L,M,S){
-  var z=(L===0)?Math.log(x/M)/S:(Math.pow(x/M,L)-1)/(L*S);
-  function val(sd){return (L===0)?M*Math.exp(S*sd):M*Math.pow(1+L*S*sd,1/L);}
+  var z=(Math.abs(L)<1e-9)?Math.log(x/M)/S:(Math.pow(x/M,L)-1)/(L*S);
+  function val(sd){return (Math.abs(L)<1e-9)?M*Math.exp(S*sd):M*Math.pow(1+L*S*sd,1/L);}
   if(z>3){var a=val(3),b=val(2); z=3+(x-a)/(a-b);}
   else if(z<-3){var c=val(-3),d2=val(-2); z=-3+(x-c)/(d2-c);}
   return z;
@@ -334,6 +384,26 @@ function nrm(z){
   return z>0?1-p:p;
 }
 function pct(z){return nrm(z)*100;}
+function zFromP(p){ // ters normal (Acklam)
+  var a=[-39.69683028665376,220.9460984245205,-275.9285104469687,138.3577518672690,-30.66479806614716,2.506628277459239];
+  var b=[-54.47609879822406,161.5858368580409,-155.6989798598866,66.80131188771972,-13.28068155288572];
+  var c=[-0.007784894002430293,-0.3223964580411365,-2.400758277161838,-2.549732539343734,4.374664141464968,2.938163982698783];
+  var d=[0.007784695709041462,0.3224671290700398,2.445134137142996,3.754408661907416];
+  var q,r,x,pp=p/100;
+  if(pp<0.02425){q=Math.sqrt(-2*Math.log(pp));
+    x=(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);}
+  else if(pp<=0.97575){q=pp-0.5;r=q*q;
+    x=(((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q/(((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1);}
+  else{q=Math.sqrt(-2*Math.log(1-pp));
+    x=-(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);}
+  return x;
+}
+function olcumLMS(k,sx,ay){
+  if(!NEYZI[k]||!NEYZI[k][sx]) return null;
+  var g=NEYZI[k+"_ay"];
+  if(ay<g[0]-0.5||ay>g[g.length-1]+0.5) return null;
+  return lmsGrid(NEYZI[k][sx],g,ay);
+}
 function band(p){
   if(p<3)   return ["ÇOK DÜŞÜK","var(--uyari)","3. persantilin altında. Tek ölçümle karar verilmez; hekimine danışmanı öneririm."];
   if(p<15)  return ["DÜŞÜK NORMAL","var(--altin)","Normal aralığın alt bandında. Kendi eğrisini koruyorsa genellikle sorun değildir."];
@@ -358,83 +428,218 @@ function sat(ad,alt,birim,deger,z,p,ek){
     '<p class="yorum">'+b[2]+(ek?" "+ek:"")+'</p></div>';
 }
 
-function hesapla(){
-  var h=document.getElementById("hata"); h.textContent="";
-  var y=yasBilgisi();
-  if(!y){ h.textContent="Geçerli bir doğum tarihi gir."; return; }
-  if(document.getElementById("pre").checked && prematureHaftasi()===null){
-    h.textContent="Gebelik haftasını 22–36 arasında gir."; return;
-  }
-  var ay=y.kullanilanGun/30.4375;
-  if(ay>maxAy()+0.5){ h.textContent="Bu hesaplayıcı "+Math.round(maxAy()/12)+" yaşa kadar geçerli."; return; }
+/* ------- hesap ------- */
+function oku(id){return parseFloat((document.getElementById(id).value||"").replace(",","."));}
 
-  var kg=parseFloat((document.getElementById("kg").value||"").replace(",","."));
-  var boy=parseFloat((document.getElementById("boy").value||"").replace(",","."));
-  var bas=parseFloat((document.getElementById("bas").value||"").replace(",","."));
-  if(!(kg>0)&&!(boy>0)){ h.textContent="En az kilo veya boy gir."; return; }
+function hesapla(kaydetMi){
+  var h=document.getElementById("hata"); h.textContent="";
+  var olcumT=document.getElementById("olcumT").value;
+  var y=yasBilgisi(olcumT);
+  if(!y){ h.textContent="Geçerli bir doğum tarihi gir."; return null; }
+  if(document.getElementById("pre").checked && gebelikGun()===null){
+    h.textContent="Gebelik haftasını 22–36 arasında gir."; return null; }
+  var ay=y.kullanilanGun/30.4375;
+  if(ay>NEYZI.maxAy+0.5){ h.textContent="Bu hesaplayıcı 18 yaşa kadar geçerli."; return null; }
+
+  var kg=oku("kg"), boy=oku("boy"), bas=oku("bas");
+  if(!(kg>0)&&!(boy>0)){ h.textContent="En az kilo veya boy gir."; return null; }
 
   var out="", ad=(document.getElementById("ad").value||"").trim();
-  var basl=(ad?ad:"Sonuç");
   var altbasl="Hesaplama yaşı: "+yasMetni(y.kullanilanGun)+(y.duzGun!==null?" (düzeltilmiş)":"");
-  out+='<p class="basl">'+basl+'<small>'+altbasl+'</small></p>';
+  out+='<p class="basl">'+(ad||"Sonuç")+'<small>'+altbasl+'</small></p>';
 
   if(y.duzGun!==null){
     out+='<div class="bilgi" style="border-color:var(--mor);margin-top:12px">'+
       '<h3 style="color:var(--mor)">Düzeltilmiş yaş kullanıldı</h3>'+
       Math.floor(y.gy/7)+' hafta '+(y.gy%7)+' gün doğdu. Takvim yaşı '+yasMetni(y.takvimGun)+
-      ', düzeltilmiş yaşı <b>'+yasMetni(y.duzGun)+'</b>. Sonuçlar düzeltilmiş yaşa göre.'+
-      '</div>';
+      ', düzeltilmiş yaşı <b>'+yasMetni(y.duzGun)+'</b>. Sonuçlar düzeltilmiş yaşa göre.</div>';
   }
 
+  var kayit={t:(olcumT||new Date().toISOString().slice(0,10)), ay:ay};
   if(kg>0){
-    var r1=ref_lms("wfa",sx,ay), z=zSkor(kg,r1.p[0],r1.p[1],r1.p[2]);
-    out+=sat("Yaşa göre kilo",r1.ad+" referansı","kg",nf(kg,kg<10?2:1),z,pct(z),"");
+    var a=olcumLMS("wfa",sx,ay);
+    if(a){var z=zSkor(kg,a[0],a[1],a[2]); kayit.kg=kg; kayit.kgP=pct(z);
+      out+=sat("Yaşa göre kilo","Neyzi referansı","kg",nf(kg,kg<10?2:1),z,pct(z),"");}
   }
   if(boy>0){
-    var r2=ref_lms("lhfa",sx,ay), z2=zSkor(boy,r2.p[0],r2.p[1],r2.p[2]);
-    out+=sat("Yaşa göre boy",r2.ad+" referansı"+(ay<24?" · 0–2 yaşta yatarak ölçülür":""),
-             "cm",nf(boy,1),z2,pct(z2),"");
+    var a2=olcumLMS("lhfa",sx,ay);
+    if(a2){var z2=zSkor(boy,a2[0],a2[1],a2[2]); kayit.boy=boy; kayit.boyP=pct(z2);
+      out+=sat("Yaşa göre boy","Neyzi referansı"+(ay<24?" · 0–2 yaşta yatarak ölçülür":""),
+               "cm",nf(boy,1),z2,pct(z2),"");}
   }
   if(bas>0){
-    if(ay<=60){
-      var r3=ref_lms("hcfa",sx,ay), z3=zSkor(bas,r3.p[0],r3.p[1],r3.p[2]);
-      out+=sat("Baş çevresi",r3.ad+" referansı","cm",nf(bas,1),z3,pct(z3),"");
-    }
+    var a3=olcumLMS("hcfa",sx,ay);
+    if(a3) out+=sat("Baş çevresi","Neyzi referansı","cm",nf(bas,1),
+                    zSkor(bas,a3[0],a3[1],a3[2]),pct(zSkor(bas,a3[0],a3[1],a3[2])),"");
+    else out+='<div class="bilgi"><h3>Baş çevresi</h3>Neyzi baş çevresi referansı '+
+              '<b>0–3 yaş</b> içindir. Bu yaşta baş çevresi rutin izlemde kullanılmaz.</div>';
   }
   if(kg>0&&boy>0){
-    if(ay<24 && boy>=45 && boy<=110){
-      var r4=lmsBoy(WFL[sx],boy), z4=zSkor(kg,r4[0],r4[1],r4[2]);
-      out+=sat("Boya göre kilo","WHO · yaştan bağımsız beslenme göstergesi","kg",nf(kg,2),z4,pct(z4),"");
+    if(ay<24){
+      if(boy>=45&&boy<=110){
+        var a4=lmsBoyGrid(WFL[sx],boy), z4=zSkor(kg,a4[0],a4[1],a4[2]);
+        out+=sat("Boya göre kilo","WHO · 2 yaş altında VKİ yerine bu kullanılır","kg",
+                 nf(kg,2),z4,pct(z4),"");
+      }
+    } else {
+      var bmi=kg/Math.pow(boy/100,2);
+      var a5=olcumLMS("bmifa",sx,ay);
+      if(a5){var z5=zSkor(bmi,a5[0],a5[1],a5[2]);
+        out+=sat("Vücut kitle indeksi","Neyzi referansı","kg/m²",nf(bmi,1),z5,pct(z5),"");}
     }
-    var bmi=kg/Math.pow(boy/100,2);
-    var r5=ref_lms("bmifa",sx,ay), z5=zSkor(bmi,r5.p[0],r5.p[1],r5.p[2]);
-    out+=sat("Vücut kitle indeksi",r5.ad+" referansı","kg/m²",nf(bmi,1),z5,pct(z5),"");
   }
   document.getElementById("sonuc").innerHTML=out;
-  ["b1","b2","b3"].forEach(function(i){
-    var el=document.getElementById(i);
-    el.hidden = (i==="b2" && y.gy===null);
-  });
+  document.getElementById("b1").hidden=false;
+  document.getElementById("b2").hidden=(y.gy===null);
+  kaydetAyar();
+  if(kaydetMi && (kayit.kg||kayit.boy)){
+    var L=kayitlariAl(); L.push(kayit);
+    L.sort(function(a,b){return a.ay-b.ay;});
+    kayitlariYaz(L);
+    document.getElementById("sonuc").insertAdjacentHTML("beforeend",
+      '<div class="sapma iyi"><b>Takibe kaydedildi.</b> "Takip &amp; hedef boy" sekmesinde '+
+      'eğriyi görebilirsin.</div>');
+  }
   document.getElementById("sonuc").scrollIntoView({behavior:"smooth",block:"start"});
-  kaydet();
+  return kayit;
 }
-document.getElementById("hesapla").onclick=hesapla;
-document.getElementById("temizle").onclick=function(){
-  ["kg","boy","bas"].forEach(function(i){document.getElementById(i).value="";});
-  document.getElementById("sonuc").innerHTML="";
-  document.getElementById("hata").textContent="";
+document.getElementById("hesapla").onclick=function(){hesapla(false)};
+document.getElementById("kaydet").onclick=function(){hesapla(true)};
+
+/* ------- takip deposu ------- */
+function kayitAnahtar(){
+  var ad=(document.getElementById("ad").value||"cocuk").trim().toLowerCase();
+  var dt=document.getElementById("dt").value||"-";
+  return "tt_kayit_"+ad+"_"+dt+"_"+sx;
+}
+function kayitlariAl(){
+  try{return JSON.parse(localStorage.getItem(kayitAnahtar())||"[]");}catch(e){return [];}
+}
+function kayitlariYaz(L){
+  try{localStorage.setItem(kayitAnahtar(),JSON.stringify(L));}catch(e){}
+}
+document.getElementById("temizleKayit").onclick=function(){
+  kayitlariYaz([]); cizTakip();
 };
 
-function kaydet(){
-  try{localStorage.setItem("tt_p2",JSON.stringify({
-    sx:sx, ad:document.getElementById("ad").value,
-    dt:document.getElementById("dt").value,
+function trTarih(s){
+  var p=s.split("-"); return p[2]+"."+p[1]+"."+p[0];
+}
+
+function cizTakip(){
+  var L=kayitlariAl();
+  var ul=document.getElementById("kayitlar");
+  var bos=document.getElementById("bosMesaj");
+  var svg=document.getElementById("grafik");
+  ul.innerHTML=""; document.getElementById("sapmaKutu").innerHTML="";
+  if(!L.length){ bos.hidden=false; svg.innerHTML=""; return; }
+  bos.hidden=true;
+
+  L.forEach(function(k,i){
+    var li=document.createElement("li");
+    var parca=[];
+    if(k.kg) parca.push(nf(k.kg,k.kg<10?2:1)+" kg");
+    if(k.boy) parca.push(nf(k.boy,1)+" cm");
+    li.innerHTML='<div class="kt"><b>'+trTarih(k.t)+'</b><span>'+yasMetni(Math.round(k.ay*30.4375))+
+      ' · '+parca.join(" · ")+'</span></div>'+
+      '<div class="kp">'+(k.boyP!=null?yaz(k.boyP):"–")+'<small>BOY P</small></div>'+
+      '<div class="kp">'+(k.kgP!=null?yaz(k.kgP):"–")+'<small>KİLO P</small></div>'+
+      '<button class="sil" data-i="'+i+'" aria-label="kaydı sil">×</button>';
+    ul.appendChild(li);
+  });
+  ul.querySelectorAll(".sil").forEach(function(b){
+    b.onclick=function(){var L2=kayitlariAl(); L2.splice(+b.dataset.i,1); kayitlariYaz(L2); cizTakip();};
+  });
+
+  /* --- grafik: z-skor ekseninde persantil eğrisi --- */
+  var W=560,H=190,ml=34,mr=10,mt=12,mb=22;
+  var xs=L.map(function(k){return k.ay;});
+  var x0=Math.min.apply(null,xs), x1=Math.max.apply(null,xs);
+  if(x1-x0<1){x0-=1;x1+=1;}
+  function X(ay){return ml+(ay-x0)/(x1-x0)*(W-ml-mr);}
+  function Y(z){return mt+(3-z)/6*(H-mt-mb);}
+  var g='';
+  [[3,"3"],[15,"15"],[50,"50"],[85,"85"],[97,"97"]].forEach(function(r){
+    var yy=Y(zFromP(r[0]));
+    g+='<line x1="'+ml+'" y1="'+yy+'" x2="'+(W-mr)+'" y2="'+yy+'" stroke="var(--cizgi)" stroke-width="1"'+
+       (r[0]===50?'':' stroke-dasharray="3 4"')+'/>';
+    g+='<text x="4" y="'+(yy+4)+'" font-size="11" fill="var(--soft)">'+r[1]+'</text>';
+  });
+  function seri(alan,renk){
+    var pts=L.filter(function(k){return k[alan]!=null;});
+    if(pts.length<1) return "";
+    var d=pts.map(function(k,i){return (i?"L":"M")+X(k.ay)+" "+Y(zFromP(k[alan]));}).join(" ");
+    var s='<path d="'+d+'" fill="none" stroke="'+renk+'" stroke-width="2.5" stroke-linejoin="round"/>';
+    pts.forEach(function(k){s+='<circle cx="'+X(k.ay)+'" cy="'+Y(zFromP(k[alan]))+'" r="4" fill="'+renk+'"/>';});
+    return s;
+  }
+  g+=seri("boyP","var(--teal)");
+  g+=seri("kgP","var(--mercan)");
+  g+='<text x="'+ml+'" y="'+(H-6)+'" font-size="11" fill="var(--soft)">'+yasMetni(Math.round(x0*30.4375))+'</text>';
+  g+='<text x="'+(W-mr)+'" y="'+(H-6)+'" font-size="11" fill="var(--soft)" text-anchor="end">'+yasMetni(Math.round(x1*30.4375))+'</text>';
+  g+='<text x="'+(ml+8)+'" y="'+(mt+12)+'" font-size="11" fill="var(--teal)" font-weight="700">boy</text>';
+  g+='<text x="'+(ml+48)+'" y="'+(mt+12)+'" font-size="11" fill="var(--mercan)" font-weight="700">kilo</text>';
+  svg.innerHTML=g;
+
+  /* --- sapma değerlendirmesi --- */
+  if(L.length>=2){
+    var mesaj=[], ciddi=false;
+    [["boyP","Boy"],["kgP","Kilo"]].forEach(function(p){
+      var seri=L.filter(function(k){return k[p[0]]!=null;});
+      if(seri.length<2) return;
+      var ilk=seri[0], son=seri[seri.length-1];
+      var dz=zFromP(son[p[0]])-zFromP(ilk[p[0]]);
+      if(Math.abs(dz)>=1.34){ ciddi=true;
+        mesaj.push("<b>"+p[1]+"</b> persantili "+yaz(ilk[p[0]])+"'ten "+yaz(son[p[0]])+
+          "'e "+(dz<0?"düştü":"çıktı")+" — iki büyük persantil bandını aşan bir kayma.");
+      } else if(Math.abs(dz)>=0.67){
+        mesaj.push("<b>"+p[1]+"</b> persantilinde "+yaz(ilk[p[0]])+" → "+yaz(son[p[0]])+
+          " yönünde bir kayma var. Takip etmekte fayda var.");
+      }
+    });
+    var kutu=document.getElementById("sapmaKutu");
+    if(mesaj.length){
+      kutu.innerHTML='<div class="sapma'+(ciddi?"":" iyi")+'">'+mesaj.join("<br><br>")+
+        (ciddi?"<br><br>Bu büyüklükte bir kayma hekim değerlendirmesi gerektirir.":"")+'</div>';
+    } else {
+      kutu.innerHTML='<div class="sapma iyi"><b>Eğrisini koruyor.</b> '+
+        'Ölçümler arasında anlamlı bir persantil kayması yok — büyümede aranan tam olarak budur.</div>';
+    }
+  }
+}
+
+/* ------- hedef boy ------- */
+document.getElementById("hedefBtn").onclick=function(){
+  var a=oku("annB"), b=oku("babB");
+  var el=document.getElementById("hedefSonuc");
+  if(!(a>0)||!(b>0)){ el.innerHTML='<p class="hata">Anne ve baba boyunu gir.</p>'; return; }
+  var orta=(a+b)/2;
+  var hedef = sx==="b" ? orta+6.5 : orta-6.5;
+  var alt=hedef-8.5, ust=hedef+8.5;
+  // hedef boyun yetişkin persantili (18 yaş referansı)
+  var L18=olcumLMS("lhfa",sx,216), pTxt="";
+  if(L18){
+    var zH=zSkor(hedef,L18[0],L18[1],L18[2]);
+    pTxt='<p class="ipucu" style="margin-top:12px">Bu boy, yetişkin '+
+         (sx==="b"?"erkek":"kadın")+' referansında yaklaşık <b>'+yaz(pct(zH))+
+         '. persantile</b> denk geliyor. Çocuğun kendi boy persantili bu sayıya yakınsa '+
+         'genetik potansiyeline uygun büyüyor demektir.</p>';
+  }
+  el.innerHTML='<div class="hedef"><div class="buyuk">'+nf(hedef,1)+' cm</div>'+
+    '<div class="aralik">beklenen aralık: '+nf(alt,1)+' – '+nf(ust,1)+' cm</div></div>'+pTxt;
+  try{localStorage.setItem("tt_ebeveyn",JSON.stringify({a:a,b:b}));}catch(e){}
+};
+
+/* ------- ayar saklama ------- */
+function kaydetAyar(){
+  try{localStorage.setItem("tt_p3",JSON.stringify({
+    sx:sx, ad:document.getElementById("ad").value, dt:document.getElementById("dt").value,
     pre:document.getElementById("pre").checked,
     gh:document.getElementById("gh").value, gg:document.getElementById("gg").value
   }));}catch(e){}
 }
 try{
-  var s=JSON.parse(localStorage.getItem("tt_p2")||"{}");
+  var s=JSON.parse(localStorage.getItem("tt_p3")||"{}");
   if(s.ad) document.getElementById("ad").value=s.ad;
   if(s.dt) document.getElementById("dt").value=s.dt;
   if(s.pre){document.getElementById("pre").checked=true;
@@ -442,6 +647,9 @@ try{
   if(s.gh) document.getElementById("gh").value=s.gh;
   if(s.gg) document.getElementById("gg").value=s.gg;
   if(s.sx) sec(s.sx);
+  var e=JSON.parse(localStorage.getItem("tt_ebeveyn")||"{}");
+  if(e.a) document.getElementById("annB").value=e.a;
+  if(e.b) document.getElementById("babB").value=e.b;
   yenileYas();
 }catch(e){}
 

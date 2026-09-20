@@ -1,0 +1,72 @@
+==========================================================
+PERSANTİL — kendi alan adında, gerçek uygulama
+Base44 yok, aracı yok, benim adım hiçbir yerde geçmiyor.
+==========================================================
+
+NEDEN BU YÖNTEM
+- Ücretsiz. Sunucu, abonelik, kredi kartı yok.
+- Türkiye'de sorunsuz açılıyor (GitHub Pages engelli değil).
+- Adres tamamen senin: tinytalks.github.io/persantil gibi.
+- PWA olarak yazıldı: telefonda "Ana ekrana ekle" dediklerinde
+  gerçek uygulama ikonu gibi duruyor, tam ekran açılıyor ve
+  internet olmadan da çalışıyor.
+- Tek klasör, statik dosyalar. Bozulacak bir arka uç yok.
+
+-------------------- 10 DAKİKALIK KURULUM --------------------
+
+1. github.com'a ücretsiz kaydol. Kullanıcı adını marka gibi seç:
+   "tinytalks" uygunsa harika.
+
+2. Sağ üstte + → New repository.
+   Repository name: persantil
+   Public seç. "Create repository" de.
+
+3. Açılan sayfada "uploading an existing file" bağlantısına tıkla.
+   Bu klasördeki TÜM dosyaları sürükleyip bırak:
+     index.html, who.js, neyzi.js, sw.js,
+     manifest.webmanifest, icon-180.png, icon-192.png,
+     icon-512.png, icon-512-maskable.png
+   Alttaki yeşil "Commit changes" düğmesine bas.
+
+4. Üstteki Settings → sol menüden Pages.
+   "Branch" kısmında: main + /(root) seç → Save.
+
+5. 1–2 dakika bekle, sayfayı yenile. Yeşil kutuda adresin çıkacak:
+   https://KULLANICIADIN.github.io/persantil/
+
+6. O adresi Instagram biyografine koy. Bitti.
+
+İSTERSEN KENDİ ALAN ADIN
+Yılda ~150–300 TL'ye persantil.tinytalks.com gibi bir adres
+alınabilir ve aynı sayfaya bağlanır. Şart değil — github.io
+adresi de tamamen senin markanla görünür.
+
+GÜNCELLEME
+Bir şey değişince aynı sayfadan dosyayı yeniden yükle.
+Kullanıcıların telefonundaki uygulama kendini günceller.
+
+------------------------ TEKNİK NOT -------------------------
+
+Referanslar:
+- 0–5 yaş: WHO Child Growth Standards (2006) LMS tabloları.
+  Kilo, boy, baş çevresi, VKİ ve boya göre kilo.
+- 6–18 yaş: Neyzi ve ark. Türk çocukları referansı (LMS).
+  Kilo, boy, VKİ.
+- 60–72 ay arası iki referans arasında köprü kuruluyor.
+  Her sonucun altında hangi referansın kullanıldığı yazıyor.
+
+Prematürelik:
+Gebelik haftası girildiğinde düzeltilmiş yaş otomatik hesaplanır
+(düzeltilmiş gün = takvim günü - (280 - gebelik günü)).
+Düzeltme 2 yaşına kadar, 28 haftadan önce doğanlarda 3 yaşına
+kadar uygulanır; sonra kendiliğinden takvim yaşına geçer.
+Sonuç ekranında hem takvim hem düzeltilmiş yaş gösterilir.
+
+z-skor: WHO yöntemi, |z|>3 için kısıtlı uygulama düzeltmesiyle.
+
+EKSİK OLAN TEK ŞEY
+0–5 yaş için Neyzi tablosu. Dergi, LMS tablosunun tamamını
+kopyalamama izin vermiyor. Makalenin PDF'ini masaüstüne
+kaydedersen (JCRPE 2015;7(4):280-293, açık erişim) tabloları
+oradan çıkarıp yerleştiririm; o zaman 0–18 yaşın tamamı Neyzi
+olur ve ChildMetrics ile birebir karşılaştırabiliriz.
