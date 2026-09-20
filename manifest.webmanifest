@@ -1,0 +1,17 @@
+{
+  "name": "Persantil — TinyTalks",
+  "short_name": "Persantil",
+  "description": "Bebek ve çocuklarda persantil ve z-skor. Prematüre doğanlarda düzeltilmiş yaşı otomatik hesaplar.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F7F1E8",
+  "theme_color": "#F7F1E8",
+  "lang": "tr",
+  "icons": [
+    {"src":"icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},
+    {"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"},
+    {"src":"icon-512-maskable.png","sizes":"512x512","type":"image/png","purpose":"maskable"}
+  ]
+}
